@@ -296,7 +296,9 @@ is one of its test fixtures — a self-organising nanowire network measured at I
 measure is Dambre, Verstraeten, Schrauwen & Massar, *Information Processing Capacity of Dynamical
 Systems*, Scientific Reports 2:514 (2012), [doi:10.1038/srep00514](https://doi.org/10.1038/srep00514).
 The band-sweep-on-one-substrate design follows Ishida, Shiramatsu, Kubota, Akita & Takahashi,
-Applied Physics Letters 122:233702 (2023), [doi:10.1063/5.0152585](https://doi.org/10.1063/5.0152585).
+*Quantification of Information Processing Capacity in Living Brain as Physical Reservoir*, Applied
+Physics Letters 122(23):233702 (2023),
+[doi:10.1063/5.0152585](https://doi.org/10.1063/5.0152585).
 
 ## 1 | Getting Started
 
@@ -334,7 +336,7 @@ reproduce.sh                    one-command pipeline
 ./reproduce.sh --check-only # verify dependencies only, run nothing
 ```
 
-or run the two steps directly:
+or run the steps directly:
 
 ```
 uv run --script code/band_ordering_study.py
@@ -349,11 +351,11 @@ uv run --script code/e4_aliasing_collapse.py
 
 Deterministic: seed 20260830, and a second run was verified byte-identical to the
 first. Runtime is roughly 40 minutes for the main study on a laptop, plus about 10
-for E1 and 25 for E2.
+for E1, 25 for E2, 5 for E3 and 15 for E4.
 
 ## 4 | Dependencies
 
-[`uv`](https://docs.astral.sh/uv/) is the only prerequisite. Both scripts carry inline
+[`uv`](https://docs.astral.sh/uv/) is the only prerequisite. Every script carries inline
 PEP 723 dependency metadata, so `uv run --script` resolves numpy, scipy, scikit-learn,
 pandas, matplotlib and `rcbench` on first run with no environment setup.
 
