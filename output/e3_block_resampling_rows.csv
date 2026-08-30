@@ -1,0 +1,13 @@
+substrate,role,band_k,n,boot_median,boot_lo,boot_hi,seed_mean,seed_lo,seed_hi,brackets_seed_mean
+esn-fast (leak 1.0),validation,1,350,7.201,6.09,9.088,8.04,7.79,8.29,1
+esn-fast (leak 1.0),validation,8,350,2.599,1.272,9.632,1.43,1.34,1.51,1
+esn-mid (leak 0.3),validation,1,350,2.344,1.456,3.531,2.57,2.16,2.97,1
+esn-mid (leak 0.3),validation,8,350,1.202,0.496,2.585,0.99,0.85,1.13,1
+esn-slow (leak 0.1),validation,1,350,1.227,0.686,2.113,1.55,1.29,1.8,1
+esn-slow (leak 0.1),validation,8,350,0.87,0.409,2.12,0.97,0.76,1.18,1
+nanowire-network (real),estimate,1,350,7.46,5.477,10.076,,,,
+nanowire-network (real),estimate,2,350,2.089,0.935,3.681,,,,
+nanowire-network (real),estimate,4,350,0.771,0.308,1.863,,,,
+nanowire-network (real),estimate,8,350,0.695,0.283,1.788,,,,
+nanowire-network (real),disjoint_windows,1,350,7.792,6.081,9.533,,,,
+nanowire-network (real),disjoint_windows,2,350,1.989,1.326,2.222,,,,

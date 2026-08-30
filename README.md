@@ -51,9 +51,9 @@ Ten independent seeds per substrate, each drawing a fresh reservoir *and* a fres
 ![Substrate ordering against observation band](output/figures/band_ordering.png)
 
 **Arm A — reading less often costs capacity and reorders nothing.** The fastest substrate is first at
-every band, in every seed. **This holds for echo-state networks and does not generalise:** on a
-resonant substrate the readout interval alone reorders. See *Extension E1* below, which was run
-after first publication and narrows this claim.
+every band, in every seed. **This holds for echo-state networks and does not generalise:** on an
+oscillator family the readout interval alone costs the fastest substrate its top rank. See
+*Extension E1* below, which was run after first publication and narrows this claim.
 
 **Arm B — slowing the drive inverts the ordering.**
 
@@ -74,8 +74,8 @@ holds in **10 of 10 seeds**.
 2. **Decimating an archived recording is not a proxy for a band change.** It answers a different
    question and gives the opposite answer about ordering. The band question needs control of the
    drive, which means an instrument, not a data repository. *Extension E1 strengthens this rather
-   than softening it: on a resonant substrate a decimated recording can reorder substrates through
-   aliasing alone, for a reason that is not about the band at all.*
+   than softening it: on an oscillator family a decimated recording can reorder substrates on its
+   own, for a reason that is not about the band at all.*
 3. **Holding *n* fixed is necessary but not sufficient.** The three simulated substrates saturate by
    n=350; the real one does not saturate until past n=1400, so it is estimator-starved at the
    study's *n* and is **excluded from every ordering claim and omitted from the figure**. A fair
@@ -126,19 +126,12 @@ k=8 is **−0.37 [−0.65, −0.09]**, with only 1 of 10 seeds still positive, a
 holds in 5 of 10 seeds, not 10. So decimating the readout **costs the fastest substrate its top rank;
 it does not cleanly send it to last.** Arm B does both, in both families.
 
-**The mechanism is aliasing, and it is checkable rather than asserted.** Samples per oscillation
-period, which only a resonant substrate has:
-
-| | period | k=1 | k=2 | k=4 | k=8 |
-|---|---|---|---|---|---|
-| spring-fast (ω 2.0) | 3.14 | 3.14 | **1.57** | 0.79 | 0.39 |
-| spring-mid (ω 0.6) | 10.47 | 10.47 | 5.24 | 2.62 | **1.31** |
-| spring-slow (ω 0.2) | 31.42 | 31.42 | 15.71 | 7.85 | 3.93 |
-
-Nyquist needs more than 2 samples per period; bold marks the first band below it. **The order in
-which the substrates cross Nyquist is the order in which they lose rank.** A leaky integrator has no
-oscillation and so no Nyquist limit of this kind — which is why Arm A looked harmless. The original
-Arm A result measured the absence of a resonance, not the innocence of a readout.
+**An aliasing mechanism was proposed here and has since been RETRACTED.** The first version of this
+section explained the reordering by Nyquist: the order in which the three substrates crossed two
+samples per oscillation period was the order in which they lost rank. That was an ordinal coincidence
+over three points, so it was swept properly — and it failed. **See Extension E4 below.** The
+observation in this section stands; the explanation does not, and the retraction is left visible
+rather than edited away.
 
 **A third family was attempted and rejected on design grounds, before its result was read.** In a
 delay-based reservoir of the Appeltant construction, θ/T sets both the physical time constant and the
@@ -199,6 +192,83 @@ So a reported crossover band is a joint property of the observation band *and* t
 of the band alone. **A comparison that reports where an ordering flips must publish its horizon
 alongside, exactly as it must publish its n.**
 
+## Extension E4 — testing E1's proposed mechanism, which did not survive
+
+E1 explained its Arm A reordering by aliasing. That claim rested on three substrates crossing a
+threshold in the right order, which is the kind of thing that is true by accident about as often as
+it is true. So it was swept: **12 log-spaced ω, 8 bands, both arms, 5 seeds**, with the prediction
+fixed before the run.
+
+**The prediction.** If aliasing governs the loss, capacity depends on the oscillation period measured
+in readout samples, `(2π/ω)/k`, and **not** on ω or k separately — so points sharing that ratio should
+collapse onto a single curve, with a knee at 2.
+
+| variance in log(capacity) explained by | samples per period | band *k* alone | ω alone |
+|---|---|---|---|
+| **Arm A** | **.188** | **.606** | .141 |
+| **Arm B** | **.921** | .152 | .241 |
+
+**In Arm A the aliasing ratio loses to the decimation factor alone by more than three to one, and
+there is no knee at Nyquist.** The loss rises smoothly and monotonically across the whole sweep,
+including where the substrate is comfortably resolved — at ω = .12 the period is 52 drive steps, so
+k=16 still leaves 3.3 samples per period, and capacity has already fallen by 1.65×. Aliasing predicts
+a threshold; there is no threshold. **The mechanism claim is withdrawn.**
+
+**E1's observation is confirmed and strengthened — it is the explanation that died.** Decimation
+costs faster substrates proportionally more, and across twelve ω the relationship is near-perfect:
+
+| ω | .120 | .200 | .334 | .557 | .928 | 1.549 | 2.000 |
+|---|---|---|---|---|---|---|---|
+| capacity ratio k=1 / k=16 | 1.65 | 2.32 | 3.58 | 4.33 | 6.31 | 8.92 | 8.64 |
+
+**corr(log ω, log decimation-loss) = +.994**, and the ω×k interaction adds **+.074** of explained
+variance over an additive fit. So what E1 saw over three points is a smooth, systematic effect over
+twelve. The honest description is a **graded timescale mismatch** — the faster the substrate relative
+to the readout interval, the more of its trajectory a decimated readout throws away — with no special
+point at which a resonance is lost. That is a description, not a first-principles mechanism, and it
+is not offered as one.
+
+**Arm B, unexpectedly, does collapse.** Capacity there is a function of the period-per-drive-interval
+ratio at **R² = .921 on a single variable**, against .152 for *k* alone, with the ω×k interaction
+adding **+.529**. **Arm B's mechanism is timescale matching, and it is now measured rather than
+named** — which matters, because Arm B is the arm this repository's headline rests on.
+
+**Range limit.** The sweep stops at ω = 2.0 because E1's integrator diverges by ω = 3.2 once the
+Duffing cubic raises the effective stiffness. Raising the substep count would fix that and would also
+change E1's published numbers, so the sweep keeps E1's integrator and stops at E1's own fastest
+substrate. No cell diverged inside the swept range.
+
+## Extension E3 — an interval for the real substrate, and why it still stays out of the figure
+
+The nanowire recording is in this repository but omitted from the figure and excluded from every
+ordering claim, because at n=350 it has not reached estimator saturation. There is one recording, so
+there are no seeds and no interval. E3 asks whether moving-block resampling can supply one.
+
+**The method was validated before it was trusted, and the validation is the actual result.** The same
+bootstrap was run on the three simulated substrates, whose true 10-seed intervals are already known.
+
+| substrate | band | seed-based 95% CI | bootstrap 95% CI | brackets? |
+|---|---|---|---|---|
+| esn-fast | k=1 | 8.04 [7.79, 8.29] | 7.20 [6.09, 9.09] | yes |
+| esn-fast | k=8 | 1.43 [1.34, 1.51] | **2.60** [1.27, 9.63] | yes |
+| esn-mid | k=8 | 0.99 [0.85, 1.13] | 1.20 [0.50, 2.58] | yes |
+| esn-slow | k=8 | 0.97 [0.76, 1.18] | 0.87 [0.41, 2.12] | yes |
+
+**It brackets every known mean, and that is a weak pass rather than a good one.** The intervals are
+far wider than the truth and **biased upward at coarse bands** — at k=8 the esn-fast bootstrap median
+is 2.60 against a true 1.43. Stitching blocks breaks the drive-to-state correspondence at every
+boundary, and those discontinuities add variance that a linear readout can fit.
+
+**So the answer is no: the real substrate stays out of the ordering figure.** Its interval is
+recorded (k=1: 7.460 [5.477, 10.076], widening to 0.695 [0.283, 1.788] at k=8) but the coarse-band
+bias means it cannot be ranked against the others.
+
+**One thing the cross-check did catch.** At k=1, where no stitching is needed, eight disjoint
+contiguous windows give a median of 7.792 across a range of **[6.081, 9.533]**. The nanowire's `n=350`
+entry in the saturation table is **6.081** — exactly the *first* of those eight windows. That row is
+one draw, not an estimate of the recording. It never entered an ordering claim, because the substrate
+was already excluded from all of them, but it should be read with that spread in mind.
+
 ## Limits
 
 Stated here rather than left for a reader to find:
@@ -207,6 +277,9 @@ Stated here rather than left for a reader to find:
   materials and says nothing about arrangement across matter. A delay-based reservoir was attempted
   and rejected on design grounds, described in E1.
 - **The one real substrate could not be fairly ranked** and appears only in the saturation control.
+  E3 tried to give it an interval and concluded the method does not support ranking it.
+- **No mechanism is claimed for the Arm A interaction.** E4 retracted the aliasing account and put a
+  description in its place, not an explanation from first principles.
 - **Arm B slows the drive by zero-order hold.** Standard and physical, but one choice among several.
 - **One estimator and one basis.** `max_degree` is fixed at 2 throughout and has never been varied.
   The delay horizon is no longer held fixed — E2 sweeps it from 2 to 32 at two sample budgets.
@@ -242,10 +315,14 @@ code/e1_second_architecture.py  E1: the same design on a damped-oscillator famil
 code/make_figure_e1.py          renders output/figures/e1_architecture.png
 code/e2_max_delay.py            E2: sweeps the delay horizon at two sample budgets
 code/make_figure_e2.py          renders output/figures/e2_max_delay.png
+code/e3_block_resampling.py     E3: block-resampled interval for the real substrate
+code/e4_aliasing_collapse.py    E4: tests E1's proposed aliasing mechanism
 output/band_ordering_rows.csv   one row per (substrate, arm, band, seed)
 output/saturation_rows.csv      the estimator control: capacity against sample count
 output/e1_architecture_rows.csv one row per (family, substrate, arm, band, seed)
 output/e2_max_delay_rows.csv    adds max_delay, basis size and a feasibility flag
+output/e3_block_resampling_rows.csv  bootstrap intervals plus the validation rows
+output/e4_aliasing_rows.csv     one row per (omega, band, arm, seed)
 output/figures/                 the three figures
 reproduce.sh                    one-command pipeline
 ```
@@ -266,6 +343,8 @@ uv run --script code/e1_second_architecture.py
 uv run --script code/make_figure_e1.py
 uv run --script code/e2_max_delay.py
 uv run --script code/make_figure_e2.py
+uv run --script code/e3_block_resampling.py
+uv run --script code/e4_aliasing_collapse.py
 ```
 
 Deterministic: seed 20260830, and a second run was verified byte-identical to the
@@ -288,6 +367,8 @@ pandas, matplotlib and `rcbench` on first run with no environment setup.
 | `code/make_figure_e1.py` | Reads `output/e1_architecture_rows.csv` and writes the 2x2 family-by-arm figure |
 | `code/e2_max_delay.py` | Sweeps `max_delay` over 2-32 across both arms and both sample budgets, flags cells below 2 samples per basis term as infeasible, and prints the two verdicts per horizon |
 | `code/make_figure_e2.py` | Reads `output/e2_max_delay_rows.csv` and writes the paired fast-minus-middle difference against band, one line per horizon |
+| `code/e3_block_resampling.py` | Moving-block resampling of the single real recording, validated first against the simulated substrates' known seed-based intervals, with a disjoint-window cross-check |
+| `code/e4_aliasing_collapse.py` | Sweeps 12 natural frequencies against 8 bands and tests whether capacity collapses onto the period-in-readout-samples ratio, which is what the retracted aliasing account predicted |
 
 ## 6 | Citation
 
