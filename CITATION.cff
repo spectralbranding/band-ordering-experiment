@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this experiment or its data, please cite it as below."
+authors:
+  - family-names: Zharnikov
+    given-names: Dmitry
+    affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0000-6893-9231"
+title: "Band-ordering experiment: does the observation band change which substrate computes better?"
+version: 1.0.0
+date-released: 2026-08-30
+repository-code: "https://github.com/spectralbranding/band-ordering-experiment"
+license: MIT
+keywords:
+  - reservoir computing
+  - information processing capacity
+  - physical reservoir computing
+  - benchmarking
+  - timescale matching
