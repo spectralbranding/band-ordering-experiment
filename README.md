@@ -238,6 +238,59 @@ Duffing cubic raises the effective stiffness. Raising the substep count would fi
 change E1's published numbers, so the sweep keeps E1's integrator and stops at E1's own fastest
 substrate. No cell diverged inside the swept range.
 
+## Extension E6 — the band sweep on CHARC's three axes, and the two arms come apart
+
+The study above reports **one** number per substrate per band. CHARC (Dale, Miller, Stepney and
+Trefzer 2019, [10.1098/rspa.2018.0723](https://doi.org/10.1098/rspa.2018.0723)) — the paper this work
+borrows its rank argument from — exists to argue that one number is not enough, and uses a
+behaviour space of three: kernel rank (KR), generalization rank (GR) and memory capacity (MC).
+`rcbench` ships all three. So the same band grid was run on all three, plus IPC for continuity, to
+ask whether the band-conditional reordering appears on every axis or only on some.
+
+**It is only on some, and the split is the result.** The two arms are not two versions of one
+manipulation — they act on different capacities.
+
+| | Arm B (slow the drive) | Arm A (decimate the readout) |
+|---|---|---|
+| **IPC** | inverts, 10/10 seeds | large, resolved loss |
+| **MC** | inverts, 10/10 seeds | large, resolved loss |
+| **KR** | inverts, 10/10 seeds | **no detectable change** |
+| **GR** | inverts, 8/10 seeds | **no detectable change** |
+
+**Arm B moves every axis.** The fast-minus-middle difference flips sign between k=1 and k=8 on all
+four, and on KR the three-way reversal is complete: 56.4 > 30.0 > 21.3 at k=1 becomes 27.4 > 22.8 >
+15.9 at k=8. The published Arm B verdict is not an artefact of having measured capacity with one
+estimator.
+
+**Arm A moves only the axes computed from the time series.** Over a factor of eight in readout
+interval, the fastest substrate loses **−6.61 IPC [−6.89, −6.33]** and **−0.50 KR [−1.27, +0.27]** —
+the first decisively resolved, the second not distinguishable from zero. The same holds for the
+middle and slow substrates. So what the readout band destroys is **memory, not separation**.
+
+**This is a structural property of the axes, and it should not be dressed as a discovery about
+substrates.** KR and GR are single-time-point measures: each takes one reservoir state per input
+stream and ranks the resulting matrix. A manipulation that changes only *which* samples of a
+trajectory are kept therefore barely touches them, while a manipulation that changes the drive
+itself — and so the dynamics — moves them a great deal. Stated the other way round: **CHARC's three
+axes are partly orthogonal to the band question**, and two of them cannot see a readout manipulation
+by construction. That is a fact about the instrument, offered as a description and explicitly not as
+a mechanism.
+
+**One apparent reordering is NOT one, and is reported rather than quietly kept.** On GR, Arm A's
+best-ranked substrate appears to change between bands. It does not survive its own interval: the
+middle-minus-slow difference is **unresolved at three of the four bands** (k=1 +0.10 [−0.43, +0.63];
+k=4 +0.00 [−0.89, +0.89]; k=8 +0.50 [−0.63, +1.63]), and the flip at k=4 rests on a mean difference
+of exactly zero. **There is no reordering on GR under Arm A.** The two substrates are tied and the
+tie is the finding.
+
+**Scope, declared.** The ESN family only — the family the two published verdicts rest on. E1 showed
+the oscillator family behaves differently under Arm A, and sweeping a second family and a third axis
+at once would confound them. KR and GR follow the ensemble protocol `rcbench` documents from
+Vidamour et al. 2022, with the ensemble size set to the node count and each evaluator's own default
+rank threshold; nothing was tuned. The IPC column reproduces the main study's published figures
+exactly (fast minus middle, Arm B: **+5.47 [+4.97, +5.98]** at k=1, **−1.71 [−2.07, −1.35]** at k=8),
+which is the check that the two runs are measuring the same thing.
+
 ## Extension E3 — an interval for the real substrate, and why it still stays out of the figure
 
 The nanowire recording is in this repository but omitted from the figure and excluded from every
@@ -370,6 +423,7 @@ pandas, matplotlib and `rcbench` on first run with no environment setup.
 | `code/e2_max_delay.py` | Sweeps `max_delay` over 2-32 across both arms and both sample budgets, flags cells below 2 samples per basis term as infeasible, and prints the two verdicts per horizon |
 | `code/make_figure_e2.py` | Reads `output/e2_max_delay_rows.csv` and writes the paired fast-minus-middle difference against band, one line per horizon |
 | `code/e3_block_resampling.py` | Moving-block resampling of the single real recording, validated first against the simulated substrates' known seed-based intervals, with a disjoint-window cross-check |
+| `code/e6_charc_axes.py` | Runs both arms across the band grid on CHARC's three axes plus IPC, using the ensemble protocol for the two rank measures, and prints per-axis orderings and both verdicts |
 | `code/e4_aliasing_collapse.py` | Sweeps 12 natural frequencies against 8 bands and tests whether capacity collapses onto the period-in-readout-samples ratio, which is what the retracted aliasing account predicted |
 
 ## 6 | Citation

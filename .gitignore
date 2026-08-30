@@ -2,6 +2,9 @@
 __pycache__/
 *.pyc
 
+# macOS cruft — do not rely on a maintainer's global gitignore
+.DS_Store
+
 # secrets — never commit
 .env
 .env.*

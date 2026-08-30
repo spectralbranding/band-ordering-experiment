@@ -8,8 +8,9 @@
 #   ./reproduce.sh                  # main study, then E1 and E2, then all figures
 #   ./reproduce.sh --check-only     # verify dependencies only, run nothing
 #
-# Runtime is roughly 40 minutes for the main study on a laptop, plus about 10 for E1
-# and 25 for E2. Output is teed to output/logs/.
+# Runtime is roughly 40 minutes for the main study on a laptop, plus about 10 for E1,
+# 25 for E2, and 25 for E6; E3 and E4 add a few minutes each. Output is teed to
+# output/logs/.
 
 set -euo pipefail
 
@@ -39,5 +40,11 @@ fi
   echo "--- extension E2: the delay horizon ---"
   uv run --script code/e2_max_delay.py
   uv run --script code/make_figure_e2.py
+  echo "--- extension E3: an interval for the real substrate ---"
+  uv run --script code/e3_block_resampling.py
+  echo "--- extension E4: testing E1's proposed mechanism ---"
+  uv run --script code/e4_aliasing_collapse.py
+  echo "--- extension E6: CHARC's three axes ---"
+  uv run --script code/e6_charc_axes.py
   echo "=== run complete $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
 } 2>&1 | tee "$LOG_FILE"
