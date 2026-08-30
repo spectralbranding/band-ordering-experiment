@@ -1,5 +1,14 @@
 .venv/
 __pycache__/
 *.pyc
-output/logs/*.log
+
+# secrets — never commit
+.env
+.env.*
+*.key
+*.pem
+secrets.yaml
+
+# fetched on first run, not part of the artifact
 output/nwn_pad131m.txt
+output/logs/*.log

@@ -1,0 +1,3 @@
+# Project root anchor. Deliberately not a pyproject.toml: both scripts carry
+# inline PEP 723 metadata and are run with `uv run --script`, which a stray
+# pyproject.toml at the root can interfere with.
