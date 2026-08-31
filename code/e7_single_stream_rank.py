@@ -72,7 +72,9 @@ def esn_run(u: np.ndarray, leak: float, seed: int) -> np.ndarray:
     return out
 
 
-WASHOUT_DRIVE = 200  # discarded in DRIVE steps, so the physical washout is band-invariant
+WASHOUT_DRIVE = (
+    200  # discarded in DRIVE steps, so the physical washout is band-invariant
+)
 
 
 def observed(u_sym: np.ndarray, leak: float, seed: int, k: int, arm: str) -> np.ndarray:
@@ -176,7 +178,9 @@ def main() -> None:
                             and x["band_k"] == k
                             and x["axis"] == axis
                         )
-                        cells.append(f"{r['mean']:6.2f} [{r['ci_lo']:.2f},{r['ci_hi']:.2f}] n={r['n_states']}")
+                        cells.append(
+                            f"{r['mean']:6.2f} [{r['ci_lo']:.2f},{r['ci_hi']:.2f}] n={r['n_states']}"
+                        )
                     print(f"    {name:26} " + "  ".join(cells))
 
 
