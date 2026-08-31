@@ -25,10 +25,11 @@ Those two are routinely conflated, and they give opposite answers about ordering
   Delay Horizon*, concept DOI
   [10.5281/zenodo.22206844](https://doi.org/10.5281/zenodo.22206844) (resolves to the latest version).
 - **Derived tables, run logs and figures** — archived as a companion Hugging Face dataset, DOI
-  [10.57967/hf/10236](https://doi.org/10.57967/hf/10236)
+  [10.57967/hf/10247](https://doi.org/10.57967/hf/10247)
   ([spectralbranding/band-conditionality-tables](https://huggingface.co/datasets/spectralbranding/band-conditionality-tables)).
-  Hugging Face mints a new snapshot DOI per update: `10.57967/hf/10228` was the pre-E7 state and is
-  **superseded** — it still resolves to the same repository, but cite `10236`.
+  Hugging Face mints a new snapshot DOI per update, so two earlier ones are **superseded** and still
+  resolve to the same repository: `10.57967/hf/10228` snapshotted the pre-E7 state and `10.57967/hf/10236`
+  the pre-E7b state. **Cite `10247`** (revision `896cebc`).
 - **Code** — this repository. `./reproduce.sh` regenerates every number and figure from a clean
   clone, deterministically, with no provider key. The one input not redistributed is the physical
   recording, which `reproduce.sh` fetches from its own source.
