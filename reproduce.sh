@@ -9,7 +9,7 @@
 #   ./reproduce.sh --check-only     # verify dependencies only, run nothing
 #
 # Runtime is roughly 40 minutes for the main study on a laptop, plus about 10 for E1,
-# 25 for E2, 25 for E6 and about 90 for E6b; E3 and E4 add a few minutes each. Output is teed to
+# 25 for E2, 25 for E6 and about 90 for E6b; E3, E4, E7 and E7b add a few minutes each. Output is teed to
 # output/logs/.
 
 set -euo pipefail
@@ -50,5 +50,7 @@ fi
   uv run --script code/e6b_charc_axes_oscillator.py
   echo "--- extension E7: the second rank protocol ---"
   uv run --script code/e7_single_stream_rank.py
+  echo "--- extension E7b: the same protocol on the second architecture ---"
+  uv run --script code/e7b_single_stream_rank_oscillator.py
   echo "=== run complete $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
 } 2>&1 | tee "$LOG_FILE"

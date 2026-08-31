@@ -376,6 +376,70 @@ entry in the saturation table is **6.081** — exactly the *first* of those eigh
 one draw, not an estimate of the recording. It never entered an ordering claim, because the substrate
 was already excluded from all of them, but it should be read with that spread in mind.
 
+## Extension E7 — the second rank protocol, and the insulation belongs to it rather than to rank
+
+The field computes kernel and generalisation rank two ways, and they coincide only in a limiting
+case. Everything above uses the **ensemble** form: m distinct input streams, one final state each,
+stacked and ranked. There a decimation changes *which* state is taken and never *how many*, so the
+matrix keeps m rows at every band — which is the whole content of the insulation argument E6 rests
+on. The **single-stream** form runs one stream and records the state at every observed timepoint, so
+a decimation changes which *columns* exist and the argument does not transfer. E7 measured that
+rather than leaving it as a caveat. **Predictions were fixed and committed before the run.**
+
+**The design choice that decides the answer was declared in advance.** Holding the drive length fixed
+would make decimation reduce the observed state count by a factor of k, and rank is bounded by the
+column count, so it would fall for a reason that has nothing to do with the band. E7 therefore holds
+the number of **observed** states fixed at 120, lengthening the drive until they survive decimation,
+which is the n-fixed discipline the rest of the study uses. The drive-length-fixed arm is run
+alongside and reported as the confound it is: rank there tracks the column count exactly (31.00 at 31
+states, 16.00 at 16) and says nothing about the band.
+
+| Arm A, leaking-rate family, single-stream GR | k=1 | k=8 | movement |
+|---|---|---|---|
+| leak 1.0 (fast) | 60.00 | 60.00 | at ceiling; none |
+| leak 0.3 (mid) | 52.60 [49.84, 55.36] | 58.50 [57.14, 59.86] | **+5.90, resolved** |
+| leak 0.1 (slow) | 24.90 [22.63, 27.17] | 39.90 [36.61, 43.19] | **+15.00, resolved** |
+
+**The insulation is a property of the protocol, not of rank measures.** The manipulation that leaves
+generalisation rank untouched under the ensemble form moves it fifteen points, resolved, under the
+single-stream form. A study reporting "generalisation rank" without naming its protocol has not said
+which of these two results it obtained. On this family kernel rank sits at the node count in every
+cell — 60.00 for every variant, every band, both arms — so it is at ceiling and discriminates nothing.
+
+### E7b — the same protocol on the oscillator family, and one prediction fails
+
+E7 ran one family. The two families have already come apart once on this same arm — under Arm A the
+leaking-rate family keeps its fastest variant on top at every band while the oscillator family loses
+its top rank at k=2 and never recovers it (E1) — so the other cell was not safe to assume. E7b runs
+it with **every setting held identical to E7 except the substrate**, which is E1's oscillator bank
+reproduced unchanged. **Four predictions were fixed and committed before the run. Three held; the
+fourth failed and the failure is the useful part.**
+
+| Arm A, oscillator family, single-stream | k=1 | k=8 | movement, paired over seeds |
+|---|---|---|---|
+| GR, omega 2.0 (fast) | 60.00 | 60.00 | at ceiling; none |
+| GR, omega 0.6 (mid) | 53.70 [51.46, 55.94] | 60.00 | **+6.30 [+4.06, +8.54]**, 10 of 10 |
+| GR, omega 0.2 (slow) | 25.80 [24.09, 27.51] | 54.30 [52.36, 56.24] | **+28.50 [+26.28, +30.72]**, 10 of 10 |
+| KR, omega 0.2 (slow) | 51.30 [49.87, 52.73] | 60.00 | **+8.70 [+7.27, +10.13]**, 10 of 10 |
+
+**The protocol dependence is not a property of leaky integrators**, and it is larger here: the same
+readout-only manipulation moves generalisation rank nearly twice as far on this family as on the
+other. What crosses the family boundary is the *protocol dependence*; the Arm A demotion that
+separates the two families on the capacity axis does **not** reach this axis. The ordering is
+preserved at every band and the fast-minus-slow gap compresses monotonically — 34.20, 23.00, 11.40,
+5.70 — with 10 of 10 seeds in the same direction at every band.
+
+**The kernel-rank ceiling is architectural, and it was predicted not to be.** The slowest oscillator
+variant sits at 51.30 at k=1 and rises to the node count by k=2 and stays there, 10 of 10 seeds. **On
+this family a readout-only band change moves kernel rank as well** — the axis the ensemble protocol
+places entirely beyond a readout manipulation's reach. E7's ceiling result is therefore reported for
+the family it was measured on and not for the protocol. The prediction that failed was ours, fixed in
+writing before the run, and it is recorded rather than absorbed.
+
+**One cost to the axis, worth reporting.** By k=8 two of the three oscillator variants sit exactly at
+the generalisation-rank ceiling, so a comparison taken at a wide readout band separates fewer systems
+than the same comparison taken at a narrow one.
+
 ## Limits
 
 Stated here rather than left for a reader to find:
@@ -480,6 +544,8 @@ pandas, matplotlib and `rcbench` on first run with no environment setup.
 | `code/e6_charc_axes.py` | Runs both arms across the band grid on CHARC's three axes plus IPC, using the ensemble protocol for the two rank measures, and prints per-axis orderings and both verdicts |
 | `code/e6b_charc_axes_oscillator.py` | The same three axes on the oscillator family, with E6's settings held identical, testing whether the Arm A / Arm B split is a property of the axes rather than the architecture |
 | `code/e4_aliasing_collapse.py` | Sweeps 12 natural frequencies against 8 bands and tests whether capacity collapses onto the period-in-readout-samples ratio, which is what the retracted aliasing account predicted |
+| `code/e7_single_stream_rank.py` | Runs the single-stream rank protocol on the leaking-rate family across the band grid and both arms, at a fixed observed-state count, with the fixed-drive arm alongside as the declared confound |
+| `code/e7b_single_stream_rank_oscillator.py` | The same protocol on the oscillator family with every setting but the substrate held identical, and prints the paired per-seed differences the four predictions are stated in |
 
 ## 6 | Citation
 
@@ -490,4 +556,4 @@ please cite this repository.
 
 Code MIT ([LICENSE](LICENSE)). Data and figures CC BY 4.0 ([LICENSE-data](LICENSE-data)).
 
-*Last updated: 2026-08-30*
+*Last updated: 2026-08-31*
