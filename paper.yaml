@@ -26,19 +26,19 @@ meta:
   - delay horizon
   - reporting standards
   - timescale matching.
-  abstract: 'Reservoir-computing benchmarks increasingly report rank orderings, but rarely report the
-    observation band or the delay horizon at which the ranking was taken. This note measures both conditions
-    on a common grid. Under a readout-only change of band, the fastest system loses -6.61 information
-    processing capacity [-6.89, -6.33] while its kernel rank moves -0.50 [-1.27, +0.27]: a readout band
-    destroys memory and leaves separation intact, because rank measures, under the ensemble protocol,
-    are computed from one state per input stream. That insulation belongs to the protocol and not to rank
-    measures: under the field''s second protocol the same manipulation moves generalisation rank by fifteen
-    points. Under a change of drive band the ordering reverses outright in 10 of 10 seeds, in two architecture
-    families, and the band at which the crossover occurs moves with the delay horizon. The systems compared
-    differ only in their time constant, so this is a demonstration of an effect the field already predicts,
-    not a discovery; the contribution is the measurement on a common grid and the reporting condition
-    that follows. The note recommends that any published ranking state its observation band, its delay
-    horizon, and which behaviour-space axes were used under which protocol.'
+  abstract: 'Reservoir-computing benchmarks increasingly report rank orderings, but rarely the observation
+    band or the delay horizon at which the ranking was taken. This note measures both conditions on a
+    common grid, on two architecture families. Under a readout-only change of band, the fastest system
+    loses -6.61 information processing capacity [-6.89, -6.33] while its kernel rank moves -0.50 [-1.27,
+    +0.27]: a readout band destroys memory and leaves separation intact, because rank measures, under
+    the ensemble protocol, are computed from one state per input stream. That insulation belongs to the
+    protocol and not to rank measures: under the field''s second protocol the manipulation moves generalisation
+    rank in both, by up to twenty-eight points, and kernel rank in one. Under a change of drive band the
+    ordering reverses in 10 of 10 seeds in both, and the band at which the crossover occurs moves with
+    the delay horizon. The systems compared differ only in their time constant, so this is a demonstration
+    of an effect the field already predicts, not a discovery; the contribution is the measurement and
+    the reporting condition that follows. The note recommends that any published ranking state its observation
+    band, its delay horizon, and which axes under which protocol.'
 claims:
 - id: P1
   type: proposition
@@ -185,10 +185,12 @@ limitations:
     of a graded, thresholdless timescale mismatch.
   severity: moderate
   addressable: true
-- description: 'The dissociation is conditional on the rank protocol, and the condition is now measured
-    rather than assumed: under the single-stream protocol a readout-only band change moves generalisation
-    rank substantially and kernel rank is at ceiling. P2 is false as a general claim about rank measures.
-    What remains untested is whether the same protocol dependence holds on the oscillator-bank family.'
+- description: 'The dissociation is conditional on the rank protocol, and the condition is measured on
+    both families rather than assumed: under the single-stream protocol a readout-only band change moves
+    generalisation rank substantially in each, and on the oscillator-bank family it moves kernel rank
+    too. P2 is false as a general claim about rank measures and holds only under the ensemble protocol.
+    What the two runs do not settle is whether a third protocol, or a family outside these two, would
+    behave as either does.'
   severity: moderate
   addressable: true
 - description: The reporting recommendation has not been tested against practice; whether adopting it
