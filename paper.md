@@ -246,7 +246,7 @@ Every numerical value and every figure reported above is reproducible from the p
 
 ### *Data and code availability.*
 
-Code is openly available at <https://github.com/spectralbranding/band-ordering-experiment> under an MIT licence. The derived result tables, run logs and figures are archived as a companion dataset under CC-BY-4.0 at [10.57967/hf/10236](https://doi.org/10.57967/hf/10236), whose contents are exactly what `reproduce.sh` regenerates. This note is archived at [10.5281/zenodo.22206844](https://doi.org/10.5281/zenodo.22206844) (concept DOI, resolving to the latest version); the version of record for this text is [10.5281/zenodo.22206845](https://doi.org/10.5281/zenodo.22206845). The physical recording re-analysed here is a public test file distributed with the benchmarking library used [@pilati-2026-rcbench] and is not redistributed.
+Code is openly available at <https://github.com/spectralbranding/band-ordering-experiment> under an MIT licence. The derived result tables, run logs and figures are archived as a companion dataset under CC-BY-4.0 at [10.57967/hf/10247](https://doi.org/10.57967/hf/10247), whose contents are exactly what `reproduce.sh` regenerates. This note is archived at [10.5281/zenodo.22206844](https://doi.org/10.5281/zenodo.22206844) (concept DOI, resolving to the latest version); the version of record for this text is [10.5281/zenodo.22206845](https://doi.org/10.5281/zenodo.22206845). The physical recording re-analysed here is a public test file distributed with the benchmarking library used [@pilati-2026-rcbench] and is not redistributed.
 
 ## Acknowledgments
 
