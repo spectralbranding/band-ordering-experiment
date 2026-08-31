@@ -48,5 +48,7 @@ fi
   uv run --script code/e6_charc_axes.py
   echo "--- extension E6b: the same axes on the second architecture ---"
   uv run --script code/e6b_charc_axes_oscillator.py
+  echo "--- extension E7: the second rank protocol ---"
+  uv run --script code/e7_single_stream_rank.py
   echo "=== run complete $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
 } 2>&1 | tee "$LOG_FILE"
