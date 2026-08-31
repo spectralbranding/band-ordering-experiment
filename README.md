@@ -391,8 +391,9 @@ would make decimation reduce the observed state count by a factor of k, and rank
 column count, so it would fall for a reason that has nothing to do with the band. E7 therefore holds
 the number of **observed** states fixed at 120, lengthening the drive until they survive decimation,
 which is the n-fixed discipline the rest of the study uses. The drive-length-fixed arm is run
-alongside and reported as the confound it is: rank there tracks the column count exactly (31.00 at 31
-states, 16.00 at 16) and says nothing about the band.
+alongside and reported as the confound it is: rank there is capped by the column count — equal to it
+in every cell except the slowest variant's generalisation rank, which falls below (19.60 at 31
+columns) — and says nothing about the band either way.
 
 | Arm A, leaking-rate family, single-stream GR | k=1 | k=8 | movement |
 |---|---|---|---|
@@ -404,7 +405,8 @@ states, 16.00 at 16) and says nothing about the band.
 generalisation rank untouched under the ensemble form moves it fifteen points, resolved, under the
 single-stream form. A study reporting "generalisation rank" without naming its protocol has not said
 which of these two results it obtained. On this family kernel rank sits at the node count in every
-cell — 60.00 for every variant, every band, both arms — so it is at ceiling and discriminates nothing.
+fixed-observed-state cell — 60.00 for every variant, every band, both arms — so it is at ceiling and
+discriminates nothing here.
 
 ### E7b — the same protocol on the oscillator family, and one prediction fails
 
@@ -425,9 +427,11 @@ fourth failed and the failure is the useful part.**
 **The protocol dependence is not a property of leaky integrators**, and it is larger here: the same
 readout-only manipulation moves generalisation rank nearly twice as far on this family as on the
 other. What crosses the family boundary is the *protocol dependence*; the Arm A demotion that
-separates the two families on the capacity axis does **not** reach this axis. The ordering is
-preserved at every band and the fast-minus-slow gap compresses monotonically — 34.20, 23.00, 11.40,
-5.70 — with 10 of 10 seeds in the same direction at every band.
+separates the two families on the capacity axis does **not** reach this axis. The top rank is held at
+every band and the fast-minus-slow gap compresses monotonically — 34.20, 23.00, 11.40, 5.70 — with 10
+of 10 seeds in the same direction at every band. **What is held is the top rank and not a resolved
+three-way ordering**: the middle and fastest variants are unresolved from k=2 (59.60 [58.91, 60.29]
+against 60.00) and sit exactly together at the ceiling by k=8.
 
 **The kernel-rank ceiling is architectural, and it was predicted not to be.** The slowest oscillator
 variant sits at 51.30 at k=1 and rises to the node count by k=2 and stays there, 10 of 10 seeds. **On
