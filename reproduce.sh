@@ -9,7 +9,7 @@
 #   ./reproduce.sh --check-only     # verify dependencies only, run nothing
 #
 # Runtime is roughly 40 minutes for the main study on a laptop, plus about 10 for E1,
-# 25 for E2, and 25 for E6; E3 and E4 add a few minutes each. Output is teed to
+# 25 for E2, 25 for E6 and about 90 for E6b; E3 and E4 add a few minutes each. Output is teed to
 # output/logs/.
 
 set -euo pipefail
@@ -46,5 +46,7 @@ fi
   uv run --script code/e4_aliasing_collapse.py
   echo "--- extension E6: CHARC's three axes ---"
   uv run --script code/e6_charc_axes.py
+  echo "--- extension E6b: the same axes on the second architecture ---"
+  uv run --script code/e6b_charc_axes_oscillator.py
   echo "=== run complete $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
 } 2>&1 | tee "$LOG_FILE"

@@ -283,9 +283,39 @@ k=4 +0.00 [−0.89, +0.89]; k=8 +0.50 [−0.63, +1.63]), and the flip at k=4 res
 of exactly zero. **There is no reordering on GR under Arm A.** The two substrates are tied and the
 tie is the finding.
 
-**Scope, declared.** The ESN family only — the family the two published verdicts rest on. E1 showed
-the oscillator family behaves differently under Arm A, and sweeping a second family and a third axis
-at once would confound them. KR and GR follow the ensemble protocol `rcbench` documents from
+### E6b — the same three axes on the second architecture, and it explains E1
+
+E6's account says the Arm A / Arm B split is a property of the *axes*, not of the architecture: KR and
+GR take one state per input stream, so a readout manipulation cannot move them whatever the substrate
+is. That predicts the split should survive a change of family. **Both predictions were fixed before
+the run**, which matters because E1's Arm A result did *not* replicate across families.
+
+**Both hold, and on this family the dissociation is cleaner than on the ESN family.** E1 found that
+decimating the readout costs the oscillator family its top rank — a demotion, not a preserved
+ordering. Running all four axes shows exactly where that demotion lives:
+
+| Arm A on the oscillator family | top rank at k=8 | fastest substrate, k=1 → k=8 |
+|---|---|---|
+| IPC | **lost** to the middle substrate | 5.91 → 0.98 |
+| MC | **lost** | 2.91 → 0.12 |
+| KR | **kept** | 37.00 → 37.50 |
+| GR | **kept** | 9.60 → 9.30 |
+
+The same manipulation, on the same substrates, **demotes the fastest on the time-series axes and
+leaves it untouched on the single-time-point axes.** So **E1's family difference is a memory effect,
+not a separation effect** — which is a thing the single-estimator study could not have said.
+
+**Arm B moves every axis here too**, and harder than on the ESN family: on KR the fastest substrate
+falls from 37.00 to 6.30 while the slowest rises from 30.50 to 40.30.
+
+**One wording correction this family forces.** On KR the fastest and middle substrates are **tied at
+k=1** (+0.40 [−0.29, +1.09], unresolved), so *inversion* is the wrong word for Arm B on that axis
+here; it is a **demotion** of the fastest (−16.90 [−18.50, −15.30] at k=8), which is E1's language and
+should be kept. On IPC, where the k=1 lead is resolved (+2.00 [+1.20, +2.80]), the sign flip is
+10 of 10 seeds and *inversion* is correct.
+
+**Scope.** E6 ran the ESN family alone, deliberately, so that family and axis were not swept at once;
+E6b then added the oscillator family with every setting held identical. KR and GR follow the ensemble protocol `rcbench` documents from
 Vidamour et al. 2022, with the ensemble size set to the node count and each evaluator's own default
 rank threshold; nothing was tuned. The IPC column reproduces the main study's published figures
 exactly (fast minus middle, Arm B: **+5.47 [+4.97, +5.98]** at k=1, **−1.71 [−2.07, −1.35]** at k=8),
@@ -424,6 +454,7 @@ pandas, matplotlib and `rcbench` on first run with no environment setup.
 | `code/make_figure_e2.py` | Reads `output/e2_max_delay_rows.csv` and writes the paired fast-minus-middle difference against band, one line per horizon |
 | `code/e3_block_resampling.py` | Moving-block resampling of the single real recording, validated first against the simulated substrates' known seed-based intervals, with a disjoint-window cross-check |
 | `code/e6_charc_axes.py` | Runs both arms across the band grid on CHARC's three axes plus IPC, using the ensemble protocol for the two rank measures, and prints per-axis orderings and both verdicts |
+| `code/e6b_charc_axes_oscillator.py` | The same three axes on the oscillator family, with E6's settings held identical, testing whether the Arm A / Arm B split is a property of the axes rather than the architecture |
 | `code/e4_aliasing_collapse.py` | Sweeps 12 natural frequencies against 8 bands and tests whether capacity collapses onto the period-in-readout-samples ratio, which is what the retracted aliasing account predicted |
 
 ## 6 | Citation
