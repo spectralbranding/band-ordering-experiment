@@ -24,8 +24,9 @@ Those two are routinely conflated, and they give opposite answers about ordering
 - **Paper** — *Rank Order Under a Capacity Benchmark Is Conditional on the Observation Band and the
   Delay Horizon*, concept DOI
   [10.5281/zenodo.22206844](https://doi.org/10.5281/zenodo.22206844) (resolves to the latest version).
-- **Derived tables, run logs and figures** — archived as a companion Hugging Face dataset,
-  [spectralbranding/band-conditionality-tables](https://huggingface.co/datasets/spectralbranding/band-conditionality-tables).
+- **Derived tables, run logs and figures** — archived as a companion Hugging Face dataset, DOI
+  [10.57967/hf/10228](https://doi.org/10.57967/hf/10228)
+  ([spectralbranding/band-conditionality-tables](https://huggingface.co/datasets/spectralbranding/band-conditionality-tables)).
 - **Code** — this repository. `./reproduce.sh` regenerates every number and figure from a clean
   clone, deterministically, with no provider key. The one input not redistributed is the physical
   recording, which `reproduce.sh` fetches from its own source.
