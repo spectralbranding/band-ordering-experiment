@@ -16,11 +16,22 @@ OUT = Path(__file__).resolve().parents[1] / "output"
 df = pd.read_csv(OUT / "band_ordering_rows.csv")
 df = df[df.substrate != "nanowire-network (real)"]
 
+# Keyed by the value in the CSV's `substrate` column (the data schema, which does
+# not change); LABEL supplies the display name used in the legend. The two are
+# separate because the paper's vocabulary was corrected after these rows were run:
+# leaky ESNs differing only in leak rate are parameterised VARIANTS within one
+# architecture family, not different substrates.
 STYLE = {
     "esn-fast (leak 1.0)": ("#1b1b1b", "o", "-"),
     "esn-mid (leak 0.3)": ("#6b6b6b", "s", "-"),
     "esn-slow (leak 0.1)": ("#a8a8a8", "^", "-"),
     "nanowire-network (real)": ("#c1462c", "D", "--"),
+}
+LABEL = {
+    "esn-fast (leak 1.0)": "leaking rate 1.0 (fast)",
+    "esn-mid (leak 0.3)": "leaking rate 0.3 (mid)",
+    "esn-slow (leak 0.1)": "leaking rate 0.1 (slow)",
+    "nanowire-network (real)": "nanowire network (physical)",
 }
 
 fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.4), sharey=True)
@@ -50,7 +61,7 @@ for ax, (arm, title) in zip(
             ms=6,
             capsize=3,
             elinewidth=1.1,
-            label=name,
+            label=LABEL[name],
         )
     ax.set_xscale("log", base=2)
     ax.set_xticks([1, 2, 4, 8])
@@ -63,7 +74,7 @@ for ax, (arm, title) in zip(
 axes[0].set_ylabel("total information processing capacity")
 axes[0].legend(frameon=False, fontsize=8.5, loc="upper right")
 fig.suptitle(
-    "Substrate ordering is conditional on the band \u2013 but only when the DRIVE slows",
+    "Rank order is conditional on the band \u2013 but only when the DRIVE slows",
     fontsize=11.5,
     x=0.02,
     ha="left",
@@ -74,8 +85,8 @@ fig.text(
     -0.04,
     "Three simulated reservoirs differing only in time constant. Mean of 10 seeds, bars are 95% CI. "
     "n held fixed at 350 across all bands. Seed 20260830.\n"
-    "Left: the fastest substrate stays first at every band. Right: it goes from first to last, in 10 of 10 seeds. "
-    "The real substrate is omitted \u2013 it had not reached estimator saturation and cannot be fairly ranked.",
+    "Left: the fastest variant stays first at every band. Right: it goes from first to last, in 10 of 10 seeds. "
+    "The one physical substrate is omitted \u2013 it had not reached estimator saturation and cannot be fairly ranked.",
     fontsize=8.2,
     color="#555",
 )

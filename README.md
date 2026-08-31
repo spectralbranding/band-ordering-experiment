@@ -1,13 +1,34 @@
 [![MIT License](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 [![CC-BY 4.0](https://img.shields.io/badge/Data-CC--BY_4.0-lightgrey.svg)](LICENSE-data)
-![Last Updated](https://img.shields.io/badge/updated-2026--08--30-success)
+![Last Updated](https://img.shields.io/badge/updated-2026--08--31-success)
 
-# Does the observation band change which substrate computes better?
+# Does the observation band change which system computes better?
 
 A small, fully reproducible experiment on reservoir-computing benchmarks.
 
 **Short answer: yes, but only when the *drive* slows — not when you merely read less often.**
 Those two are routinely conflated, and they give opposite answers about ordering.
+
+> **A note on wording, added 2026-08-31.** The objects compared here are **parameterised variants
+> within one architecture family** — leaky echo-state networks differing only in leak rate, and
+> damped Duffing oscillator banks differing only in natural frequency. They are *not* different
+> substrates, and the accompanying paper calls them **leaking-rate variants** and **oscillator-bank
+> variants** for that reason. The only physical substrate in the study is the nanowire network, and
+> it is excluded from every ordering. The word "substrate" survives in places below because this
+> README was written first; where it names one of the simulated families, read "variant". The
+> `substrate` column in the result tables is the original data schema and is kept so the CSVs
+> round-trip against this code.
+
+## Availability
+
+- **Paper** — *Rank Order Under a Capacity Benchmark Is Conditional on the Observation Band and the
+  Delay Horizon*, concept DOI
+  [10.5281/zenodo.22206844](https://doi.org/10.5281/zenodo.22206844) (resolves to the latest version).
+- **Derived tables, run logs and figures** — archived as a companion Hugging Face dataset,
+  [spectralbranding/band-conditionality-tables](https://huggingface.co/datasets/spectralbranding/band-conditionality-tables).
+- **Code** — this repository. `./reproduce.sh` regenerates every number and figure from a clean
+  clone, deterministically, with no provider key. The one input not redistributed is the physical
+  recording, which `reproduce.sh` fetches from its own source.
 
 ---
 
@@ -48,7 +69,7 @@ Ten independent seeds per substrate, each drawing a fresh reservoir *and* a fres
 
 ## Results
 
-![Substrate ordering against observation band](output/figures/band_ordering.png)
+![Rank order against observation band](output/figures/band_ordering.png)
 
 **Arm A — reading less often costs capacity and reorders nothing.** The fastest substrate is first at
 every band, in every seed. **This holds for echo-state networks and does not generalise:** on an

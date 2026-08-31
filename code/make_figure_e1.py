@@ -82,14 +82,14 @@ fig.suptitle(
 fig.text(
     0.02,
     -0.07,
-    "Two architecture families, three substrates each, differing only in time constant. "
+    "Two architecture families, three variants each, differing only in time constant. "
     "Mean of 10 seeds on identical drives, bars are 95% CI, n held fixed at 350.\n"
     "Top row: in the ESN family, decimating the readout (A) reorders nothing while slowing "
     "the drive (B) inverts the ordering – the published result.\n"
     "Bottom row: in the oscillator family, slowing the drive inverts it again (10 of 10 seeds), "
-    "but decimating the readout ALSO costs the fastest substrate its top rank,\n"
-    "because a resonant substrate read below twice its oscillation frequency is aliased. "
-    "A leaky integrator has no oscillation and no such limit.",
+    "but decimating the readout ALSO costs the fastest variant its top rank.\n"
+    "No mechanism is claimed for that: an aliasing account was tested against a 12-point sweep and RETRACTED; "
+    "the honest description is a graded, thresholdless timescale mismatch.",
     fontsize=8.2,
     color="#555",
 )

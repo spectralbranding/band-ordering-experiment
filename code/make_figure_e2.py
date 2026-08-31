@@ -79,11 +79,11 @@ fig.suptitle(
 fig.text(
     0.02,
     -0.07,
-    "Paired per-seed difference between the fastest and middle substrate in Arm B, 10 seeds, bars are 95% CI. "
+    "Paired per-seed difference between the fastest and middle variant in Arm B, 10 seeds, bars are 95% CI. "
     "Crossing zero is the inversion.\n"
     "Every horizon crosses, at both sample budgets, in 10 of 10 seeds – so the published Arm A / Arm B distinction "
     "is not an artefact of holding max_delay at 8 (bold line).\n"
-    "But the crossing moves: a longer horizon inverts the ordering at a finer band and reverses all three substrates "
+    "But the crossing moves: a longer horizon inverts the ordering at a finer band and reverses all three variants "
     "rather than only demoting the fastest.\n"
     "The n = 350 and n = 2800 panels agree, including for the horizon that is infeasible at the smaller budget "
     "(dotted), so none of this is estimator bias.",
