@@ -1,0 +1,574 @@
+spine_version: "0.2"
+paper_key: "2026bq"
+title: "Rank Order Under a Capacity Benchmark Is Conditional on the Observation Band and the Delay Horizon"
+
+thesis: |
+  A rank ordering of computational systems under a capacity benchmark holds only at the observation
+  band and delay horizon at which it was taken, and neither condition is usually reported. Under a
+  readout-only band change the ordering's memory component collapses while its separation component
+  is untouched; under a drive-band change the ordering reverses outright in every seed, in two
+  architecture families, at a crossover band that moves with the delay horizon. The systems compared
+  differ only in their time constant, so this is a demonstration of an effect the field's own algebra
+  predicts, not a discovery. The contribution is the measurement on a common grid and the reporting
+  condition it licenses.
+
+boundary_conditions:
+  - id: C1
+    statement: "Simulation only. Two architecture families of parameterised variants carry every ordering claim; the one physical system in the study is excluded from all of them."
+  - id: C2
+    statement: "One capacity estimator with a degree-2 polynomial basis, held fixed throughout."
+  - id: C3
+    statement: "Rank measures computed under the ensemble protocol: distinct input streams, one state each, taken at the end of the stream."
+  - id: C4
+    statement: "The drive band is coarsened by zero-order hold, which is the standard construction but is one choice."
+  - id: C5
+    statement: "The drive is independent and identically distributed, which the capacity basis requires."
+
+assumption_atoms:
+  - id: AA1
+    statement: "The capacity basis is well posed only on an i.i.d. drive; decimating an i.i.d. series leaves it i.i.d., so a readout-only manipulation does not disturb the basis."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "design constraint fixed by a feasibility spike before any measurement"
+  - id: AA2
+    statement: "A fair comparison across systems requires a sample count above every system's saturation point; equal budget is not equal adequacy."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "established by the saturation control"
+  - id: AA3
+    statement: "Step size and leaking rate are not independent parameters: discretisation condenses them into a compound gain, so the leaking rate enters the update only as their product."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "read from the publisher PDF, not from an abstract"
+
+observations:
+  - id: O1
+    statement: "Capacity rows for four systems across four bands in both arms, ten seeds per simulated system, sample count held fixed."
+    raw_data_pointer: "band-ordering-experiment/output/band_ordering_rows.csv"
+    instrument: "capacity estimator at degree 2, delay horizon 8"
+    conditions_at_capture: "seed 20260830; n fixed at 350; 60 nodes; spectral radius 0.95"
+    provenance:
+      created_by: "tool:band_ordering_study.py"
+      created_at: "2026-08-30"
+      under_conditions: "deterministic; re-run from an independent tree returned byte-identical rows"
+    body_sections: ["Results - Rank order reverses"]
+  - id: O2
+    statement: "The same grid on a second architecture family of damped oscillator banks differing only in natural frequency."
+    raw_data_pointer: "band-ordering-experiment/output/e1_architecture_rows.csv"
+    instrument: "as O1"
+    conditions_at_capture: "time constants placed to straddle the first family's range; identical drives seed for seed"
+    provenance:
+      created_by: "tool:e1_second_architecture.py"
+      created_at: "2026-08-30"
+      under_conditions: "calibration targeted time-constant span and numerical stability, never an ordering"
+    body_sections: ["Results - Rank order reverses"]
+  - id: O3
+    statement: "The band grid crossed with five delay horizons at two sample budgets, with basis size and samples-per-basis-term recorded per cell."
+    raw_data_pointer: "band-ordering-experiment/output/e2_max_delay_rows.csv"
+    instrument: "as O1, horizon varied 2 to 32"
+    conditions_at_capture: "n = 350 and n = 2800; cells below two samples per basis term marked infeasible"
+    provenance:
+      created_by: "tool:e2_max_delay.py"
+      created_at: "2026-08-30"
+      under_conditions: "budget varied precisely because it changes which cells are feasible"
+    body_sections: ["Results - The crossover band is a joint property"]
+  - id: O4
+    statement: "Moving-block resampling of the single physical recording, with the same procedure applied to the simulated systems whose true intervals are known."
+    raw_data_pointer: "band-ordering-experiment/output/e3_block_resampling_rows.csv"
+    instrument: "200 replicates, block length 50"
+    conditions_at_capture: "one recording, no seed replication possible"
+    provenance:
+      created_by: "tool:e3_block_resampling.py"
+      created_at: "2026-08-30"
+      under_conditions: "the method was validated against known intervals before it was trusted"
+    body_sections: ["Discussion - Limits"]
+  - id: O5
+    statement: "Twelve log-spaced natural frequencies across eight bands in both arms, five seeds."
+    raw_data_pointer: "band-ordering-experiment/output/e4_aliasing_rows.csv"
+    instrument: "as O1"
+    conditions_at_capture: "prediction fixed in advance of the run"
+    provenance:
+      created_by: "tool:e4_aliasing_collapse.py"
+      created_at: "2026-08-30"
+      under_conditions: "run specifically to test a mechanism the authors had already published"
+    body_sections: ["A stylized account - no mechanism claimed"]
+  - id: O6
+    statement: "Kernel rank, generalisation rank, memory capacity and capacity across the band grid, on the leaking-rate family."
+    raw_data_pointer: "band-ordering-experiment/output/e6_charc_axes_rows.csv"
+    instrument: "three-axis behaviour space plus capacity"
+    conditions_at_capture: "ensemble rank protocol; ESN family only, so family and axis are not swept together"
+    provenance:
+      created_by: "tool:e6_charc_axes.py"
+      created_at: "2026-08-31"
+      under_conditions: "continuity check reproduced the published capacity column exactly"
+    body_sections: ["Results - A readout band destroys memory"]
+  - id: O7
+    statement: "The same four axes on the oscillator-bank family."
+    raw_data_pointer: "band-ordering-experiment/output/e6b_charc_axes_oscillator_rows.csv"
+    instrument: "as O6"
+    conditions_at_capture: "predictions fixed before the run"
+    provenance:
+      created_by: "tool:e6b_charc_axes_oscillator.py"
+      created_at: "2026-08-31"
+      under_conditions: "run to test whether the axis split survives a change of family"
+    body_sections: ["Results - A readout band destroys memory"]
+  - id: O8
+    statement: "Kernel and generalisation rank computed from ONE stream sampled at every observed timepoint, across the band grid, both arms, under a fixed observed-state count and under a fixed-drive confound arm."
+    raw_data_pointer: "band-ordering-experiment/output/e7_single_stream_rank_rows.csv"
+    instrument: "single-stream rank protocol, 60 nodes, 120 observed states"
+    conditions_at_capture: "predictions fixed and committed before the run; washout applied in drive steps so it is band-invariant"
+    provenance:
+      created_by: "tool:e7_single_stream_rank.py"
+      created_at: "2026-08-31"
+      under_conditions: "run to measure L7 rather than leave it declared"
+    body_sections: ["Results - The dissociation belongs to the rank protocol"]
+
+methods:
+  - id: M1
+    statement: "Two-arm band sweep at fixed sample count: one arm decimates the readout at native drive, the other coarsens drive and readout together."
+    type: "simulation"
+    inputs: [O1, O2]
+    outputs: [F1, F2, F3]
+    code_anchor: "band-ordering-experiment/code/band_ordering_study.py"
+    reproducibility: {seed: "20260830", version: "public repo 03e032b", runtime_environment: "Python 3.12, inline dependency metadata, no setup"}
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "sample count held fixed across bands to keep band separate from estimator bias"
+    body_sections: ["Method - The two arms"]
+  - id: M2
+    statement: "Horizon sweep at two sample budgets, excluding cells that cannot feed the basis."
+    type: "simulation"
+    inputs: [O3]
+    outputs: [F5]
+    code_anchor: "band-ordering-experiment/code/e2_max_delay.py"
+    reproducibility: {seed: "20260830", version: "public repo 03e032b", runtime_environment: "as M1"}
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "agreement across a budget that changes feasibility is the anti-bias argument"
+    body_sections: ["Results - The crossover band is a joint property"]
+  - id: M3
+    statement: "Three-axis behaviour-space sweep across the same band grid, run separately on each architecture family."
+    type: "simulation"
+    inputs: [O6, O7]
+    outputs: [F3, F4]
+    code_anchor: "band-ordering-experiment/code/e6_charc_axes.py"
+    reproducibility: {seed: "20260830", version: "public repo 03e032b", runtime_environment: "as M1"}
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "families run separately so that family and axis are not confounded"
+    body_sections: ["Results - A readout band destroys memory"]
+  - id: M4
+    statement: "Twelve-point frequency sweep with a pre-registered prediction: if aliasing governs the readout loss, capacity depends on period-in-readout-samples and not on frequency or band separately."
+    type: "simulation"
+    inputs: [O5]
+    outputs: [NF1, F7]
+    code_anchor: "band-ordering-experiment/code/e4_aliasing_collapse.py"
+    reproducibility: {seed: "20260830", version: "public repo 03e032b", runtime_environment: "as M1"}
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "run to test the authors' own published explanation"
+    body_sections: ["A stylized account - no mechanism claimed"]
+  - id: M5
+    statement: "The second rank protocol run across the same band grid, with the observed-state count held fixed and a fixed-drive arm run alongside as a declared confound."
+    type: "simulation"
+    inputs: [O8]
+    outputs: [F8]
+    code_anchor: "band-ordering-experiment/code/e7_single_stream_rank.py"
+    reproducibility: {seed: "20260830", version: "public repo b7e4861", runtime_environment: "as M1"}
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "the design choice that decides the answer was declared in advance"
+    body_sections: ["Results - The dissociation belongs to the rank protocol"]
+
+findings:
+  - id: F1
+    statement: "A drive-band change reverses the rank order of systems differing only in time constant, in ten of ten seeds, in both architecture families."
+    source_observations: [O1, O2]
+    generating_method: M1
+    statistical_strength: "10/10 per-seed inversions; paired differences of opposite sign with non-overlapping 95% intervals at both ends of the grid"
+    conditions: "C1, C2, C4, C5"
+    antecedents: [O1, O2, M1]
+    falsifier: "A family in which the drive band is swept over a comparable range and the ordering is preserved in a majority of seeds."
+    provenance:
+      created_by: "tool:band_ordering_study.py"
+      created_at: "2026-08-30"
+      under_conditions: "replicated on a second family the same day"
+    body_sections: ["Results - Rank order reverses"]
+  - id: F2
+    statement: "A readout-only band change preserves the top rank on the leaking-rate family and costs the fastest oscillator-bank variant its top rank without sending it to last."
+    source_observations: [O1, O2]
+    generating_method: M1
+    statistical_strength: "leaking-rate family 10/10 seeds top rank preserved; oscillator family 1/10 seeds positive at the coarsest band, but the fast-versus-slow comparison is unresolved"
+    conditions: "C1, C2, C5"
+    antecedents: [O1, O2, M1]
+    falsifier: "A readout-only sweep on the leaking-rate family that reorders in a majority of seeds."
+    provenance:
+      created_by: "tool:e1_second_architecture.py"
+      created_at: "2026-08-30"
+      under_conditions: "the family difference is what E1 was run to find"
+    body_sections: ["Results - Rank order reverses"]
+  - id: F3
+    statement: "Across a factor of eight in readout interval the fastest variant loses a large and resolved amount of capacity while its kernel rank movement is small and unresolved."
+    source_observations: [O6, O7]
+    generating_method: M3
+    statistical_strength: "capacity change resolved with an interval excluding zero; kernel rank interval spans zero; the split replicates on the second family, where the rank axes are unmoved"
+    conditions: "C1, C2, C3"
+    antecedents: [O6, O7, M3]
+    falsifier: "A readout-only sweep under the same rank protocol that moves a state-rank measure by a resolved amount."
+    provenance:
+      created_by: "tool:e6_charc_axes.py"
+      created_at: "2026-08-31"
+      under_conditions: "families run separately"
+    body_sections: ["Results - A readout band destroys memory"]
+  - id: F4
+    statement: "There is no reordering on generalisation rank under a readout-only band change; the apparent flip rests on a mean difference of exactly zero and the variants are unresolved at three of four bands."
+    source_observations: [O6]
+    generating_method: M3
+    statistical_strength: "three of four bands unresolved; the flip is a zero difference"
+    conditions: "C1, C2, C3"
+    antecedents: [O6, M3]
+    falsifier: "A resolved, replicated ordering difference on that axis under the readout arm."
+    provenance:
+      created_by: "tool:e6_charc_axes.py"
+      created_at: "2026-08-31"
+      under_conditions: "reported against the authors' first reading of their own table"
+    body_sections: ["Results - A readout band destroys memory"]
+  - id: F5
+    statement: "The band at which the ordering crosses over moves with the delay horizon, while both arm verdicts hold at every horizon and both sample budgets tested."
+    source_observations: [O3]
+    generating_method: M2
+    statistical_strength: "10/10 inversions at every horizon; the effect size is non-monotone in the horizon and peaks in the interior of the swept range"
+    conditions: "C1, C2"
+    antecedents: [O3, M2]
+    falsifier: "A horizon at which the drive-arm inversion fails, or at which the readout arm reorders the leaking-rate family."
+    provenance:
+      created_by: "tool:e2_max_delay.py"
+      created_at: "2026-08-30"
+      under_conditions: "infeasible cells excluded by a declared rule"
+    body_sections: ["Results - The crossover band is a joint property"]
+  - id: F6
+    statement: "At the sample budget the band sweep permits, the physical system has not saturated while the simulated ones have, so its position in any ordering would report estimator starvation rather than capacity."
+    source_observations: [O1, O4]
+    generating_method: M1
+    statistical_strength: "eight disjoint resampling windows spanning a range comparable to the value itself"
+    conditions: "C1"
+    antecedents: [O1, O4]
+    falsifier: "A recording long enough to saturate the estimator at every band in the grid."
+    provenance:
+      created_by: "tool:e3_block_resampling.py"
+      created_at: "2026-08-30"
+      under_conditions: "the exclusion was decided on this finding, not on the result it would have given"
+    body_sections: ["Discussion - Limits"]
+  - id: F7
+    statement: "Capacity under a drive-band change collapses onto the ratio of oscillation period to drive interval on a single variable, while under a readout-only change no such collapse occurs and the decimation factor alone explains more."
+    source_observations: [O5]
+    generating_method: M4
+    statistical_strength: "single-variable fit strong in the drive arm and weak in the readout arm, where the band alone beats the ratio by more than three to one"
+    conditions: "C1, C2"
+    antecedents: [O5, M4]
+    falsifier: "A sweep in which the readout arm collapses onto the period ratio."
+    provenance:
+      created_by: "tool:e4_aliasing_collapse.py"
+      created_at: "2026-08-30"
+      under_conditions: "the arm this strengthens is the one carrying the ranking claim"
+    body_sections: ["A stylized account - no mechanism claimed"]
+  - id: F8
+    statement: "Under the single-stream rank protocol a readout-only band change moves generalisation rank by a large resolved amount, where the ensemble protocol shows no detectable change; kernel rank under that protocol is at the node-count ceiling and discriminates nothing."
+    source_observations: [O8]
+    generating_method: M5
+    statistical_strength: "slow variant 24.90 [22.63, 27.17] to 39.90 [36.61, 43.19]; middle variant +5.90, both resolved; kernel rank exactly at the node count in every cell"
+    conditions: "C1, C2"
+    antecedents: [O8, M5]
+    falsifier: "A single-stream run at fixed observed-state count in which generalisation rank does not move across the band grid."
+    provenance:
+      created_by: "tool:e7_single_stream_rank.py"
+      created_at: "2026-08-31"
+      under_conditions: "predictions fixed before the run; the fixed-drive arm is a declared confound and rank there tracks the column count"
+    body_sections: ["Results - The dissociation belongs to the rank protocol"]
+
+negative_findings:
+  - id: NF1
+    statement: "The aliasing account of the readout-only demotion is refuted and withdrawn: the loss rises smoothly with no threshold at the resolution limit, including where the oscillation is comfortably resolved."
+    source_observations: [O5]
+    generating_method: M4
+    conditions: "C1"
+    antecedents: [O5, M4, A1]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "the refuted claim was the authors' own, already public when it was tested"
+    body_sections: ["A stylized account - no mechanism claimed"]
+
+alternative_explanations:
+  - id: A1
+    statement: "The readout-only demotion is aliasing: variants lose rank in the order they cross the resolution limit."
+    status: "refuted"
+    tested_by: [M4]
+    outcome: NF1
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "proposed on an ordinal coincidence over three points; refuted on twelve"
+    body_sections: ["A stylized account - no mechanism claimed"]
+  - id: A2
+    statement: "The reordering is estimator bias: coarser bands leave fewer effective samples, and capacity is biased by sample count."
+    status: "controlled"
+    tested_by: [M1, M2]
+    outcome: "Sample count is held fixed across bands by design, and the horizon sweep reproduces every verdict at two budgets that differ in which cells are feasible."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "the trap was found by a feasibility spike before the study was written"
+    body_sections: ["Method - What was held fixed"]
+
+robustness_checks:
+  - id: RC1
+    statement: "Spectral radius and input scaling were held constant while the time constant varied, so the manipulated parameter is not confounded with reservoir excitability."
+    outcome: "confirmed in the published code"
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "declaration verifiable by a reader, not an assertion"
+  - id: RC2
+    statement: "No readout is trained anywhere in the pipeline, so no regularisation parameter can interact with the band."
+    outcome: "structural; the question cannot arise for this estimator"
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "capacity is a projection onto an orthogonal basis"
+  - id: RC3
+    statement: "Both extensions were re-executed from an independent working tree and returned byte-identical result files."
+    outcome: "determinism verified rather than assumed"
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "different tree from the one that produced them"
+
+derivations:
+  - id: D1
+    statement: "Because discretisation condenses step size and time constant into a compound gain, a band change rescales every variant's effective leaking rate by a common factor; capacity is non-monotone in the effective leak, so a common rescaling moves variants to different points of a curve with an interior optimum, which is a reordering."
+    antecedents: [AA3]
+    evidence:
+      - type: citation
+        anchor: "The compound-gain form and its equivalent-network rescaling are derived in the leaky-integrator source itself, not here."
+        citation_keys: [jaeger-2007-leaky-integrator-esn, dambre-2012-information-processing-capacity]
+        citation_role: mechanism
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "read from the publisher PDF"
+    body_sections: ["A stylized account - Why a leaky integrator already predicts this"]
+  - id: D2
+    statement: "Rank measures under the ensemble protocol take one state per input stream, so a manipulation that changes only which samples are retained cannot change how many linearly independent states the ensemble contains, and those axes cannot inherit the interval dependence of a delay functional."
+    antecedents: []
+    conditions: "C3"
+    evidence:
+      - type: citation
+        anchor: "The ensemble protocol, and the existence of a second protocol that samples one stream at every timepoint."
+        citation_keys: [vidamour-2022-nanomagnetic-reservoir-capability, dale-2019-substrate-independent-framework, wringe-2025-reservoir-computing-benchmarks]
+        citation_role: method_definition
+    falsifier: "Under the alternative protocol the readout band changes which columns enter the matrix, so the insulation does not hold and the dissociation should not be assumed to carry over."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "the two protocols coincide only in a limiting case"
+    body_sections: ["A stylized account - Why two of the axes cannot see a readout band"]
+
+propositions:
+  - id: P1
+    statement: "A rank ordering of computational systems under a capacity benchmark is conditional on the observation band and on the delay horizon of the estimator."
+    type: empirical_finding
+    conditions: "C1, C2"
+    antecedents: [F1, F5, D1]
+    assumptions: [AA1, AA2, AA3]
+    falsifier: "A band-and-horizon sweep across systems on a common grid in which the ordering is invariant."
+    evidence:
+      - type: empirical
+        anchor: "Reversal in every seed in two families, with the crossover moving as the horizon changes."
+      - type: citation
+        anchor: "The field's canonical source treats step size as a resource-management choice whose quality cost is nil beyond two provisos; this measures the provisos failing."
+        citation_keys: [jaeger-2007-leaky-integrator-esn]
+        citation_role: concession
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "wording fixed downward: variants, not substrates"
+    body_sections: ["Abstract", "Discussion - What is demonstrated"]
+  - id: P2
+    statement: "Band conditionality of a readout attaches to memory functionals and not to state-rank functionals."
+    type: empirical_finding
+    conditions: "C1, C2, C3"
+    antecedents: [F3, F4, D2, F8]
+    assumptions: [AA1]
+    falsifier: "A resolved movement of a state-rank measure under a readout-only band change at the same protocol."
+    evidence:
+      - type: empirical
+        anchor: "A large resolved capacity loss against an unresolved rank movement, replicated across two architecture families."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "stated at one grain; the numbers live in the tables, not in the claim"
+    body_sections: ["Abstract", "Results - A readout band destroys memory"]
+  - id: P3
+    statement: "The drive band and the readout band are different manipulations, so the drive-band question cannot be settled from archived recordings."
+    type: empirical_finding
+    conditions: "C1, C5"
+    antecedents: [F1, F2]
+    falsifier: "A demonstration that decimating an archived recording reproduces the ordering obtained by re-driving the same system slower."
+    evidence:
+      - type: empirical
+        anchor: "The two arms give opposite answers about rank order on the same systems."
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "this closes the cheap route the study was hoping to open"
+    body_sections: ["Method - The two arms", "Discussion - What is demonstrated"]
+  - id: P4
+    statement: "A published ranking should report its observation band, its delay horizon alongside its sample count, and which axes it was taken on together with the protocol behind them."
+    type: management_outcome
+    conditions: ""
+    antecedents: [P1, P2, P3]
+    falsifier: "A demonstration that a reader can recover a ranking's conditions, or reproduce its comparative verdict, without those three items."
+    evidence:
+      - type: citation
+        anchor: "The field's own best-practice checklist for reporting an experiment names the leakage rate and the data splits but neither the band nor the horizon; the competing horizon-cutoff conventions are documented there as competing."
+        citation_keys: [wringe-2025-reservoir-computing-benchmarks, dambre-2012-information-processing-capacity]
+        citation_role: gap_evidence
+      - type: citation
+        anchor: "A benchmarking suite that exposes the band explicitly and pins it to consistent defaults already holds the quantities the first two items ask for."
+        citation_keys: [pilati-2026-rcbench]
+        citation_role: applies_to
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "without this node the note is a repository description; it is the contribution"
+    body_sections: ["Discussion - A three-item reporting standard"]
+
+limitations:
+  - id: L1
+    statement: "Simulation only, and the single physical system is excluded from every ordering. The limit belongs on the first page rather than in a limitations section."
+    affects: [P1, P2, P3]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "the only real fix is a comparison across physically distinct systems on a common grid"
+  - id: L2
+    statement: "Everything ordered here differs in one parameter within one architecture family. The inference from that to a claim about substrates is an argument, made explicitly, and not a measurement."
+    affects: [P1]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "the unit of analysis was renamed to stop the stronger reading"
+  - id: L3
+    statement: "The delay horizons swept are short by the field's own conventions: a cutoff proportional to node count would set a far longer horizon than the sweep reaches, and the degree-2 basis makes the longer cutoff unaffordable at any budget this design can reach."
+    affects: [P1]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "found by reading the review rather than by a reviewer"
+  - id: L4
+    statement: "The maximum degree of the capacity basis is fixed and unswept, carrying a bounded comparability cost against higher-degree measurements."
+    affects: [P1, P2]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "either outcome of a sweep would strengthen the claim, so it is not load-bearing"
+  - id: L5
+    statement: "Ten seeds, t-based intervals, no multiplicity correction. The result is a fixed-effects statement about these six systems, not a population claim about architectures."
+    affects: [P1, P2, P3]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "the primary statistic is the per-seed inversion count"
+  - id: L6
+    statement: "No mechanism is claimed for the readout arm; what replaces the withdrawn account is a description of a graded, thresholdless timescale mismatch."
+    affects: [P2]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-30"
+      under_conditions: "offered as description, never as mechanism"
+  - id: L7
+    statement: "The dissociation is conditional on the rank protocol, and the condition is now measured rather than assumed: under the single-stream protocol a readout-only band change moves generalisation rank substantially and kernel rank is at ceiling. P2 is false as a general claim about rank measures. What remains untested is whether the same protocol dependence holds on the oscillator-bank family."
+    affects: [P2]
+    antecedents: [F8]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "this is the note's own thesis applying to the note"
+  - id: L8
+    statement: "The reporting recommendation has not been tested against practice; whether adopting it changes what a reader can conclude is an empirical question this note does not answer."
+    affects: [P4]
+    provenance:
+      created_by: "author"
+      created_at: "2026-08-31"
+      under_conditions: "absence reported rather than glossed"
+
+corpus_precedents: []
+
+external_anchors:
+  - citation_key: jaeger-2007-leaky-integrator-esn
+    role: mechanism
+    spine_nodes: [AA3, D1, P1]
+  - citation_key: dambre-2012-information-processing-capacity
+    role: estimator_definition
+    spine_nodes: [D1, P4]
+  - citation_key: dale-2019-substrate-independent-framework
+    role: method_definition
+    spine_nodes: [D2]
+  - citation_key: vidamour-2022-nanomagnetic-reservoir-capability
+    role: method_definition
+    spine_nodes: [D2]
+  - citation_key: wringe-2025-reservoir-computing-benchmarks
+    role: gap_evidence
+    spine_nodes: [D2, L3, L7, P4]
+  - citation_key: pilati-2026-rcbench
+    role: applies_to
+    spine_nodes: [P4]
+  - citation_key: ishida-2023-ipc-living-brain
+    role: incumbent_class
+    spine_nodes: [P1]
+  - citation_key: ortin-2019-tradeoff-capacity-rate
+    role: incumbent_class
+    spine_nodes: [P1]
+  - citation_key: nishioka-2025-ultrawideband-ion-gating-reservoir
+    role: incumbent_class
+    spine_nodes: [P1]
+  - citation_key: seshasai-chaitanya-2025-tunable-decay-reservoir-node
+    role: incumbent_class
+    spine_nodes: [P1]
+  - citation_key: li-2025-homogeneous-memristors-tunable-decay
+    role: incumbent_class
+    spine_nodes: [P1]
+  - citation_key: lukosevicius-2009-reservoir-computing-approaches
+    role: foundational
+    spine_nodes: [P1]
+  - citation_key: yan-2024-future-of-reservoir-computing
+    role: comparability_frame
+    spine_nodes: [P4]
+  - citation_key: liang-2024-physical-reservoir-emerging-electronics
+    role: comparability_frame
+    spine_nodes: [P4]
+  - citation_key: tanaka-2019-physical-reservoir-computing-review
+    role: scope_boundary
+    spine_nodes: [L1]
+  - citation_key: nakajima-2020-physical-reservoir-computing
+    role: scope_boundary
+    spine_nodes: [L1]
+  - citation_key: cucchi-2022-hands-on-reservoir-computing
+    role: practical_template
+    spine_nodes: [P4]
+  - citation_key: jaurigue-2024-external-timescale-tailoring
+    role: practical_template
+    spine_nodes: [P4]
+  - citation_key: appeltant-2011-single-dynamical-node
+    role: rejected_design
+    spine_nodes: [L2]
+
