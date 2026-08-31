@@ -306,17 +306,17 @@ findings:
     statement: "Under the single-stream rank protocol a readout-only band change moves generalisation rank by a large resolved amount, where the ensemble protocol shows no detectable change; kernel rank under that protocol is at the node-count ceiling on the leaking-rate family and discriminates nothing there."
     source_observations: [O8]
     generating_method: M5
-    statistical_strength: "slow variant 24.90 [22.63, 27.17] to 39.90 [36.61, 43.19]; middle variant +5.90, both resolved; kernel rank exactly at the node count in every cell"
+    statistical_strength: "slow variant 24.90 [22.63, 27.17] to 39.90 [36.61, 43.19]; middle variant +5.90, both resolved; kernel rank exactly at the node count in every fixed-observed-state cell"
     conditions: "C1, C2"
     antecedents: [O8, M5]
     falsifier: "A single-stream run at fixed observed-state count in which generalisation rank does not move across the band grid."
     provenance:
       created_by: "tool:e7_single_stream_rank.py"
       created_at: "2026-08-31"
-      under_conditions: "predictions fixed before the run; the fixed-drive arm is a declared confound and rank there tracks the column count"
+      under_conditions: "predictions fixed before the run; the fixed-drive arm is a declared confound and rank there is capped by the column count, equalling it except for the slowest variant's generalisation rank"
     body_sections: ["Results - The dissociation belongs to the rank protocol"]
   - id: F9
-    statement: "The protocol dependence in F8 is not a property of leaky integrators: on the oscillator-bank family the same readout-only band change moves generalisation rank by roughly twice as much, and it also moves kernel rank, which on that family is not at ceiling. The ordering is preserved at every band in both families and the gap between fastest and slowest compresses."
+    statement: "The protocol dependence in F8 is not a property of leaky integrators: on the oscillator-bank family the same readout-only band change moves generalisation rank by roughly twice as much, and it also moves kernel rank, which on that family is not at ceiling. The TOP rank is held at every band in both families and the gap between fastest and slowest compresses; the three-way ordering is NOT resolved, since on the oscillator family the middle and fastest variants are unresolved from k=2 and tied at the ceiling by k=8."
     source_observations: [O9]
     generating_method: M6
     statistical_strength: "generalisation rank, slowest variant, k=1 to k=8: +28.50 [+26.28, +30.72], 10 of 10 seeds; middle variant +6.30 [+4.06, +8.54], 10 of 10; kernel rank, slowest variant: +8.70 [+7.27, +10.13], 10 of 10, from 51.30 [49.87, 52.73] at k=1 to the node count from k=2 on; slow-minus-fast generalisation-rank gap -34.20 [-35.91, -32.49] at k=1 to -5.70 [-7.64, -3.76] at k=8, 10 of 10 seeds negative at every band"
@@ -326,7 +326,7 @@ findings:
     provenance:
       created_by: "tool:e7b_single_stream_rank_oscillator.py"
       created_at: "2026-08-31"
-      under_conditions: "the fixed-drive arm is again a declared confound and rank there tracks the column count"
+      under_conditions: "the fixed-drive arm is again a declared confound and rank there is capped by the column count rather than equal to it in every cell"
     body_sections: ["Results - The dissociation belongs to the rank protocol"]
 
 negative_findings:
