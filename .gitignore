@@ -15,3 +15,14 @@ secrets.yaml
 # fetched on first run, not part of the artifact
 output/nwn_pad131m.txt
 output/logs/*.log
+
+# Fleet internal (public repo — nothing tracked)
+.claude/
+.claude-decisions/
+skills/
+.clinerules
+.cursorrules
+.cursorignore
+.rooignore
+.mcp.json
+.flake8
