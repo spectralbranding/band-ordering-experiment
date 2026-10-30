@@ -63,7 +63,7 @@ Two arms, because they are not the same experiment:
 Ten independent seeds per substrate, each drawing a fresh reservoir *and* a fresh input.
 95% confidence intervals are t-based, df = 9.
 
-**Two controls that are load-bearing, not decoration:**
+**Two controls the result depends on:**
 
 - **`n` is held fixed at 350 across every band.** IPC is strongly biased by sample count. A naive
   decimation sweep drops *n* alongside the band and reports estimator starvation as a band effect —
