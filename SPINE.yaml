@@ -527,7 +527,7 @@ limitations:
     provenance:
       created_by: "author"
       created_at: "2026-08-31"
-      under_conditions: "either outcome of a sweep would strengthen the claim, so it is not load-bearing"
+      under_conditions: "either outcome of a sweep would strengthen the claim, so the claim does not depend on it"
   - id: L5
     statement: "Ten seeds, t-based intervals, no multiplicity correction. The result is a fixed-effects statement about these six systems, not a population claim about architectures."
     affects: [P1, P2, P3]
